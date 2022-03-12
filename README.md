@@ -420,10 +420,13 @@ I. Para esto, cree un proyecto maven nuevo usando el arquetipo de aplicación We
     
 19.  Revise [este ejemplo de validación de formularios con javascript](http://www.w3schools.com/js/js_validation.asp) y agruéguelo a su formulario, de manera que -al momento de hacer ‘submit’- desde el browser se valide que el valor ingresado es un valor numérico.
 - Valido
+
 ![](./img/Picture28.png)
 ![](./img/Picture26.png)
 ![](./img/Picture27.png)
+
 - Invalido
+
 ![](./img/Picture31.png)
 20.  Recompile y ejecute la aplicación. Abra en su navegador en la página del formulario, y rectifique que la página hecha anteriormente sea mostrada. Ingrese los datos y verifique los resultados. Cambie el formulario para que ahora en lugar de POST, use el método GET . Qué diferencia observa?
 
