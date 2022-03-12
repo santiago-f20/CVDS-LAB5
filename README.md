@@ -428,6 +428,7 @@ I. Para esto, cree un proyecto maven nuevo usando el arquetipo de aplicación We
 - Invalido
 
 ![](./img/Picture31.png)
+
 20.  Recompile y ejecute la aplicación. Abra en su navegador en la página del formulario, y rectifique que la página hecha anteriormente sea mostrada. Ingrese los datos y verifique los resultados. Cambie el formulario para que ahora en lugar de POST, use el método GET . Qué diferencia observa?
 
 ![](./img/Picture29.png)
@@ -542,14 +543,34 @@ En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco
     Si no hay errores, la aplicación debería quedar accesible en la URL: [http://localhost:8080/faces/guess.xhtml](http://localhost:8080/faces/guess.xhtml)
     
 10.  Si todo funcionó correctamente, realice las siguientes pruebas:
-    
-    1.  Abra la aplicación en un explorador. Realice algunas pruebas con el juego e intente adivinar el número.
-        
-    2.  Abra la aplicación en dos computadores diferentes. Si no dispone de uno, hágalo en dos navegadores diferentes (por ejemplo Chrome y Firefox; incluso se puede en un único navegador usando una ventana normal y una ventana de incógnito / privada). Haga cinco intentos en uno, y luego un intento en el otro. ¿Qué valor tiene cada uno?
-        
+
+
+        1.  Abra la aplicación en un explorador. Realice algunas pruebas con el juego e intente adivinar el número.
+
+![](./img/Picture32.png)
+
+![](./img/Picture33.png)
+
+![](./img/Picture34.png)
+
+![](./img/Picture35.png)
+
+
+     2.  Abra la aplicación en dos computadores diferentes. Si no dispone de uno, hágalo en dos navegadores diferentes (por ejemplo Chrome y Firefox; incluso se puede en un único navegador usando una ventana normal y una ventana de incógnito / privada). Haga cinco intentos en uno, y luego un intento en el otro. ¿Qué valor tiene cada uno?
+     Los valores de los intentos no son independientes.
+
+![](./img/Picture38.png)
+
+
     3.  Aborte el proceso de Tomcat-runner haciendo Ctrl+C en la consola, y modifique el código del backing-bean de manera que use la anotación @SessionScoped en lugar de @ApplicationScoped. Reinicie la aplicación y repita el ejercicio anterior.
         -   ¿Coinciden los valores del premio?.
         -   Dado la anterior, ¿Cuál es la diferencia entre los backing-beans de sesión y los de aplicación?
+        Con los de sesion cada pagina es indepentdiente.
+
+![](./img/Picture36.png)
+
+![](./img/Picture37.png)
+
     4.  Por medio de las herramientas de desarrollador del explorador (Usando la tecla "F12" en la mayoría de exploradores):
         -   Ubique el código HTML generado por el servidor.
         -   Busque el elemento oculto, que contiene el número generado aleatoriamente.
@@ -558,6 +579,27 @@ En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco
         -   Revise qué otros estilos se pueden agregar a los diferentes elementos y qué efecto tienen en la visualización de la página.
         -   Actualice la página. Los cambios de estilos realizados desaparecen, pues se realizaron únicamente en la visualización, la respuesta del servidor sigue siendo la misma, ya que el contenido de los archivos allí almacenados no se ha modificado.
         -   Revise qué otros cambios se pueden realizar y qué otra información se puede obtener de las herramientas de desarrollador.
+
+    ```
+    <html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>
+        <h1>Juego adivinanza</h1>
+<form id="guess_form" name="guess_form" method="post" action="/faces/guess.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="guess_form" value="guess_form">
+
+            <label><h1>Ingrese numero entre 1 y 20</h1></label><br><input id="guess_form:num" name="guess_form:num" type="text" value="0" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all " aria-required="true" placeholder="Numero entre 1 y 20" size="20"><script id="guess_form:num_s" type="text/javascript">$(function(){PrimeFaces.cw("InputText","widget_guess_form_num",{id:"guess_form:num"});});</script>
+            <br><button id="guess_form:j_idt7" name="guess_form:j_idt7" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PrimeFaces.ab({s:&quot;guess_form:j_idt7&quot;,f:&quot;guess_form&quot;,u:&quot;guess_form&quot;});return false;" type="submit"><span class="ui-button-text ui-c">Enviar</span></button><script id="guess_form:j_idt7_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_guess_form_j_idt7",{id:"guess_form:j_idt7"});});</script>
+            <p><b>Premio Actual</b></p><label id="guess_form:j_idt9" class="ui-outputlabel ui-widget">100000</label>
+            <br>
+            <p><b>Intentos</b></p><label id="guess_form:j_idt11" class="ui-outputlabel ui-widget">0</label>
+            <br>
+            <p><b>Numero</b></p><label id="guess_form:j_idt13" class="ui-outputlabel ui-widget">2</label>
+            <br>
+            <p><b>Estado de juego</b></p><label id="guess_form:j_idt15" class="ui-outputlabel ui-widget"></label>
+            <br><button id="guess_form:j_idt17" name="guess_form:j_idt17" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PrimeFaces.ab({s:&quot;guess_form:j_idt17&quot;,f:&quot;guess_form&quot;,u:&quot;guess_form&quot;});return false;" type="submit"><span class="ui-button-text ui-c">Reset</span></button><script id="guess_form:j_idt17_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_guess_form_j_idt17",{id:"guess_form:j_idt17"});});</script><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="-9189921226440907258:1382762079137429313" autocomplete="off">
+</form>
+    
+</body></html>
+    ```
 11.  Para facilitar los intentos del usuario, se agregará una lista de los últimos intentos fallidos realizados:
     
     1.  Agregue en el `Backing-Bean`, una propiedad que contenga una lista de intentados realizados.

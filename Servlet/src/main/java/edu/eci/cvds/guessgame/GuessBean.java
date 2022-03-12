@@ -1,24 +1,21 @@
 package edu.eci.cvds.guessgame;
 import java.util.Random;
-import java.util.Scanner;
 
-import javax.enterprise.context.SessionScoped;
-
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "guessBean")
 @SessionScoped
 public class GuessBean{
     private Random random;
-    private double numberToGuess;
-    private int attemps = 0, prize = 100000, guess;
+    private int attemps = 0, prize = 100000, guess, numberToGuess = setNumber();
     private String gameState;
-    private String gameState2;
 
     public GuessBean(){
     }
 
-    public double getNumber(){
+    public int getNumber(){
         return numberToGuess;
     }
 
@@ -36,10 +33,6 @@ public class GuessBean{
 
     public String getState(){
         return gameState;
-    }
-
-    public String getMoney(){
-        return gameState2;
     }
 
     public int setNumber(){
@@ -62,34 +55,34 @@ public class GuessBean{
     public void setGState(String state){
         this.gameState = state;
     }
-
-    public void setGState2(String state){
-        this.gameState2 = state;
-    }
-
     
     public void reset(){
         this.attemps = 0;
         this.prize = 100000;
-        this.gameState = "EN JUEGO";
+        this.gameState = "";
         this.numberToGuess = setNumber();
     }
 
-    public void guess(){
-        this.numberToGuess = setNumber();
-        Scanner userGuess = new Scanner(System.in);
-        guess = userGuess.nextInt();
-        while(prize > 0){
-            if(guess != numberToGuess){
-                prize -= 10000;
-                attemps += 1;
-                guess = userGuess.nextInt();
-            }else{
-                setGState("GANÓ");
-                setGState2(String.valueOf(prize));
-                break;
+    public boolean guess(int nTG, int number){
+        if(nTG == number){
+            return true;
+        }else{return false;}
+    }
+
+    public void main(){
+
+        if(guess(numberToGuess, guess) == false && prize > 0){
+            prize -= 10000;
+            attemps += 1;
+            setGState("FALLÓ");
+        }else if(prize <= 0){
+            try {
+                Thread.sleep(3*1000);
+                reset();
+            } catch (Exception e) {
             }
+        }else{
+            setGState("GANÓ "+String.valueOf(prize));
         }
-        reset();
     }
 }
